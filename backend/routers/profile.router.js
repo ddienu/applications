@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { verifyRole } from "../middleware/permissionsMiddleware.js";
 import ProfileController from "../controllers/profile.controller.js";
 const router = Router();
 const name = '/profile';
@@ -7,13 +8,13 @@ const name = '/profile';
 
 
 router.route(name)
-  .post(ProfileController.register) // Register a new profile
-  .get(ProfileController.show);// Show all profile
+  .post(verifyRole(['admin']), ProfileController.register) // Register a new profile
+  .get(verifyRole(['admin']), ProfileController.show);// Show all profile
 
 router.route(`${name}/:id`)
-  .get(ProfileController.findById)// Show a profile by ID
-  .put(ProfileController.update)// Update a profile by ID
-  .delete(ProfileController.delete);// Delete a profile by ID
+  .get(verifyRole(['admin']), ProfileController.findById)// Show a profile by ID
+  .put(verifyRole(['admin']), ProfileController.update)// Update a profile by ID
+  .delete(verifyRole(['admin']), ProfileController.delete);// Delete a profile by ID
 
 
 export default router;

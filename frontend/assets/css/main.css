@@ -46,3 +46,7 @@
  footer {
    margin-top: auto;
  }
+
+ #contentFrame{
+  min-height: 100dvh;
+ }

@@ -15,6 +15,7 @@ const objForm = new Form('roleForm', 'edit-input');
 const objModal = new bootstrap.Modal(document.getElementById('appModal'));
 const objTableBody = document.getElementById('app-table-body');
 const myForm = objForm.getForm();
+const appStorage = new AppStorage();
 const textConfirm = "Press a button!\nEither OK or Cancel.";
 const appTable = "#app-table";
 
@@ -45,7 +46,7 @@ myForm.addEventListener('submit', (e) => {
   resultServices.then(response => {
     return response.json();
   }).then(data => {
-    // console.log(data);
+    console.log(data);
   }).catch(error => {
     console.log(error);
   }).finally(() => {
@@ -128,7 +129,9 @@ function getData() {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_ROLE;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {

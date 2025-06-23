@@ -1,54 +1,11 @@
 import UserModel from '../models/user.model.js';
+import UsersApiModel from '../models/usersApi.model.js';
 import { encryptPassword, comparePassword } from '../library/appBcrypt.js';
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import UserRole from '../models/userRole.model.js';
 dotenv.config();
-class UserController {
-
-  async register(req, res) {
-    try {
-      const { username, email, password_hash, status_id } = req.body;
-      // Basic validation
-      if (!username || !email || !password_hash || !status_id) {
-        return res.status(400).json({ error: 'Required fields are missing' });
-      }
-      // Additional validation
-      if (password_hash.length < 8) {
-        return res.status(400).json({
-          error: 'The password must be at least 8 characters long.'
-        });
-      }
-      // Verify if the User already exists
-      const existingUser = await UserModel.findByName(username);
-      if (existingUser) {
-        return res.status(409).json({
-          error: 'The username is already in use'
-        });
-      }
-      const passwordHash = await encryptPassword(password_hash);
-      const userId = await UserModel.create({
-        username,
-        email,
-        passwordHash,
-        statusId: status_id
-      });
-
-      const role = await UserRole.create({
-        user_id: userId,
-        role_id: 2,
-        status_id: status_id
-      });
-
-      res.status(201).json({
-        message: 'User created successfully',
-        id: userId
-      });
-    } catch (error) {
-      console.error('Registration error:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+class UsersApiController {
 
     async registerUserApi(req, res) {
     try {
@@ -94,45 +51,50 @@ class UserController {
     }
   }
 
-  async show(req, res) {
-    try {
-      // Verify if the User already exists
-      const userModel = await UserModel.showActive();
-      if (!userModel) {
-        return res.status(409).json({ error: 'The User no already exists' });
-      }
-      res.status(201).json({
-        message: 'User successfully',
-        data: userModel
+  async showApiUsers(req, res){
+    try{
+      const usersApiModel = await UsersApiModel.getUsersApi();
+
+      if(!usersApiModel){
+        return res.status(200).json({
+          message: "No api users founded"
+        });
+      };
+
+      return res.status(200).json({
+        message: "Api users retrieved successfully",
+        data: usersApiModel
       });
-    } catch (error) {
-      console.error('Error in registration:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+
+    }catch(error){
+      return res.status(500).json({
+        error: "Internal Server Error",
+      })
     }
   }
 
   async update(req, res) {
     try {
-         const {  email,  status_id} = req.body;
+         const { email,  status_id } = req.body;
          const id = req.params.id;
       // Basic validation
       if (!email || !status_id|| !id) {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
       // Verify if the User already exists  
-      const existingUser = await UserModel.findByIdActive(id);
+      const existingUser = await UsersApiModel.getApiUserById(id);
       if (existingUser.length === 0) {
-        return res.status(409).json({ data:'',error: 'The User no already exists' });
+        return res.status(409).json({ error: `The API user with ID: ${id} does not exists` });
       }   
 
-      const updateUserModel = await UserModel.update(id, { email, status_id});
-      res.status(201).json({
+      const updateUserApiModel = await UsersApiModel.update(id, {email, status_id});
+      res.status(200).json({
         message: 'User update successfully',
-        data: updateUserModel
+        data: updateUserApiModel
 
       });
     } catch (error) {
-      console.error('Error in registration:', error);
+      console.error('Error in update user api controller:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -145,13 +107,13 @@ class UserController {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
       // Verify if the User already exists
-      const deleteUserModel = await UserModel.delete(id);
-      res.status(201).json({
-        message: 'User delete successfully',
+      const deleteUserModel = await UsersApiModel.delete(id);
+      res.status(204).json({
+        message: `Api user with ID: ${id} deleted successfully`,
         data: deleteUserModel
       });
     } catch (error) {
-      console.error('Error in registration:', error);
+      console.error('Error in delete user api controller:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -164,16 +126,17 @@ class UserController {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
       // Verify if the User already exists
-      const existingUserModel = await UserModel.findByIdActive(id);
-      if (!existingUserModel) {
-        return res.status(409).json({ error: 'The User No already exists' });
+      const existingUserApi = await UsersApiModel.getApiUserById(id);
+      console.log(existingUserApi);
+      if (existingUserApi.length === 0) {
+        return res.status(409).json({ error: `The API user with ID: ${id} does not exists` });
       }
-      res.status(201).json({
-        message: 'User successfully',
-        data: existingUserModel
+      res.status(200).json({
+        message: `API user with ID: ${id} retrieved successfully`,
+        data: existingUserApi
       });
     } catch (error) {
-      console.error('Error in registration:', error);
+      console.error('Error in find by id:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -187,6 +150,7 @@ class UserController {
       }
       // Check if the user already exists
       const existingUser = await UserModel.findByName(user);
+      console.log(existingUser);
       if (existingUser) {
         const passwordHash = await comparePassword(password, existingUser.password_hash);
         if (!passwordHash) {
@@ -221,4 +185,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default new UsersApiController();

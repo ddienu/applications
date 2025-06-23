@@ -58,7 +58,7 @@ class UserModel {
 
   static async findByName(username) {
     const [rows] = await connect.query(
-      'SELECT * FROM user WHERE username = ?',
+      'SELECT US.*, ROL.name AS role_name FROM USER US INNER JOIN User_Role UR ON US.id = UR.user_id INNER JOIN Role ROL ON UR.role_id = ROL.id WHERE US.username = ?',
       [username]
     );
     return rows[0];
@@ -71,14 +71,5 @@ class UserModel {
     );
     return result.affectedRows > 0 ? this.findById(id) : null;
   }
-
-    static async createUserApi({ username, email, passwordHash, statusId }) {
-    const [result] = await connect.query(
-      'INSERT INTO User (username, email, password_hash, status_id) VALUES (?, ?, ?, ?)',
-      [username, email, passwordHash, statusId]
-    );
-    return result.insertId;
-  }
-
 }
 export default UserModel;

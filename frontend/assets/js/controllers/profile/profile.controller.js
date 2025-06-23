@@ -15,6 +15,7 @@ const objModal = new bootstrap.Modal(document.getElementById('appModal'));
 const objTableBody = document.getElementById('app-table-body');
 const objSelect = document.getElementById('user_id');
 const objSelectDocument = document.getElementById('document_type_id');
+const appStorage = new AppStorage();
 const myForm = objForm.getForm();
 const textConfirm = "Press a button!\nEither OK or Cancel.";
 const appTable = "#app-table";
@@ -42,9 +43,10 @@ myForm.addEventListener('submit', (e) => {
     endpointUrl = URL_PROFILE + keyId;
   }
   documentData = objForm.getDataForm();
-  console.log(documentData);
+  // console.log(documentData);
 
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -113,7 +115,9 @@ function getDataId(id) {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_PROFILE + id;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -132,7 +136,9 @@ function getData() {
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_PROFILE;
 
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -220,7 +226,9 @@ function getDataUser() {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_USER;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -240,7 +248,9 @@ function getDataDocumentType() {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_DOCUMENT_TYPE;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {

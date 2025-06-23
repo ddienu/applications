@@ -42,7 +42,8 @@ async function checkAuth() {
       } else {
         // Token is invalid, redirect to login page
         storage.removeItem(KEY_TOKEN);
-        window.location.href = `..${moduleLogin}`;
+        storage.removeItem(USER_ROLE);
+        window.location.href = `${window.location.origin}/frontend/views/auth`;
         return false;
       }
 
@@ -56,6 +57,7 @@ async function checkAuth() {
   } catch (error) {
     console.error('Error al validate token:', error);
     storage.removeItem(KEY_TOKEN);
+    storage.removeItem(USER_ROLE);
     //window.location.href = `..${moduleLogin}`;
     return false;
   }

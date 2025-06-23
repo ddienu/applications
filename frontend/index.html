@@ -19,7 +19,7 @@
 
 <body>
   <!--Header/Navbar-->
-  <header>
+  <header style="position: fixed; width: 100%; z-index: 1;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <button class="btn btn-outline-light me-2" id="sidebarToggle">
@@ -37,7 +37,7 @@
               <a class="nav-link" href="#"><i class="bi bi-person me-1"></i> Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a>
+              <a id="signOutBtn" class="nav-link text-warning" href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
             </li>
           </ul>
         </div>
@@ -47,12 +47,53 @@
   <!--End Header/Navbar -->
   <!-- Sidebar -->
   <aside class="sidebar bg-dark text-white">
-    <div class="p-3">
+    <div class="p-3" id="userapi-content", style="display: none;">
       <h5 class="text-center">Menú</h5>
       <hr>
       <ul class="nav flex-column">
         <li class="nav-item">
           <a class="nav-link text-white" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#user"><i class="bi bi-people me-2"></i> Usuarios</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white" href="#userApi"><i class="bi bi-people me-2"></i> Usuarios API</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#userStatus"><i class="bi bi-person-gear me-2"></i> Estado de Usuario</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#documentType"><i class="bi bi-person-badge me-2"></i> Tipos de Documento</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#role" title="Roles"><i
+              class="bi bi-people-fill me-2"></i> Roles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#profile" title="Profile"><i
+              class="bi bi-person-vcard me-2"></i> Perfil</a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white" href="#reports"><i class="bi bi-file-earmark-text me-2"></i> Reportes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#stats"><i class="bi bi-graph-up me-2"></i> Estadísticas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#help"><i class="bi bi-question-circle me-2"></i> Ayuda</a>
+        </li> -->
+      </ul>
+    </div>
+        <div class="p-3" id="admin-content" style="display: none;">
+      <h5 class="text-center">Menú</h5>
+      <hr>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#userApi"><i class="bi bi-people me-2"></i> Usuarios API</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="#user"><i class="bi bi-people me-2"></i> Usuarios</a>
@@ -71,7 +112,7 @@
           <a class="nav-link text-white" href="#profile" title="Profile"><i
               class="bi bi-person-vcard me-2"></i> Perfil</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link text-white" href="#reports"><i class="bi bi-file-earmark-text me-2"></i> Reportes</a>
         </li>
         <li class="nav-item">
@@ -79,7 +120,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="#help"><i class="bi bi-question-circle me-2"></i> Ayuda</a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </aside>

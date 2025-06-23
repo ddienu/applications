@@ -14,6 +14,7 @@ const objModal = new bootstrap.Modal(document.getElementById('appModal'));
 const objTableBody = document.getElementById('app-table-body');
 const objSelect = document.getElementById('status_id');
 const myForm = objForm.getForm();
+const appStorage = new AppStorage();
 const textConfirm = "Press a button!\nEither OK or Cancel.";
 const appTable = "#app-table";
 
@@ -42,7 +43,9 @@ myForm.addEventListener('submit', (e) => {
   documentData = objForm.getDataForm();
   //console.log(documentData);
 
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token)
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -70,6 +73,7 @@ function showId(id) {
   objForm.disabledForm();
   objForm.disabledButton();
   objForm.hiddenButton();
+  objForm.erasePwField();
   getDataId(id);
 }
 
@@ -78,7 +82,8 @@ function edit(id) {
   objForm.resetForm();
   objForm.enabledEditForm();
   objForm.enabledButton();
-  objForm.showButton();
+  objForm.showButton();     
+  objForm.erasePwField();                                                                                                    
   keyId = id;
   getDataId(id);
 }
@@ -91,7 +96,8 @@ function delete_(id) {
     documentData = "";
     httpMethod = METHODS[3]; // DELETE method
     endpointUrl = URL_USER + id;
-    const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+    const token = appStorage.getItem(KEY_TOKEN);
+    const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
     resultServices.then(response => {
       return response.json();
     }).then(data => {
@@ -111,7 +117,8 @@ function getDataId(id) {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_USER + id;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -129,7 +136,9 @@ function getData() {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_USER;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -152,17 +161,29 @@ function createTable(data) {
   let rowLong = getData.length;
   for (let i = 0; i < rowLong; i++) {
     let row = getData[i];
-    let dataRow = `<tr>
+    if(appStorage.getItem(USER_ROLE) === "admin"){
+    let dataRowAdmin = `<tr>
 <td>${row.id}</td>
 <td>${row.username}</td>
 <td>${row.email}</td>
-<td><input type="password" value=${row.password_hash} disabled  readonly /></td>
 <td>${row.status_name}</td>
+<td>${row.role_name}</td>
 <td>
 <button type="button" title="Button Show"class="btn btn-success" onclick="showId(${row.id})"><i class='fas fa-eye'></i></button>
 <button type="button"title="Button Edit" class="btn btn-primary" onclick="edit(${row.id})"><i class='fas fa-edit' ></i></button>
 <button type="button" title="Button Delete" class="btn btn-danger" onclick="delete_(${row.id})"><i class='fas fa-trash' ></i></button> `;
-    objTableBody.innerHTML += dataRow;
+    objTableBody.innerHTML += dataRowAdmin;
+  }else if(appStorage.getItem(USER_ROLE) === "userapi"){
+    let dataRowUserAPI = `<tr>
+<td>${row.id}</td>
+<td>${row.username}</td>
+<td>${row.email}</td>
+<td>${row.status_name}</td>
+<td>${row.role_name}</td>
+<td>
+<button type="button" title="Button Show"class="btn btn-success" onclick="showId(${row.id})"><i class='fas fa-eye'></i></button>`;
+    objTableBody.innerHTML += dataRowUserAPI;
+  }
   }
 }
 
@@ -195,7 +216,9 @@ function getDataStatus() {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_USER_STATUS;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {

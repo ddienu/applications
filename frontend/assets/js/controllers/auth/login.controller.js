@@ -34,13 +34,14 @@ myForm.addEventListener('submit', async (e) => {
   resultServices.then(response => {
     return response.json();
   }).then(data => {
-    //console.log(data);
+    console.log(data);
     if (data['status'] === 'error') {
       console.log("Error in login");
       toggleLoading(false);
       return;
     } else {
       appStorage.setItem(KEY_TOKEN, data['user'].token);
+      appStorage.setItem(USER_ROLE, data.user.role);
       console.log("Login Success");
       window.location.href = '../../';
     }

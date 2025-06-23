@@ -59,7 +59,6 @@ class UserStatusModel {
     } catch (error) {
       return [0];
     }
-
   }
 }
 

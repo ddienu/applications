@@ -5,7 +5,6 @@
  * File:
  */
 class Form {
-
   /**
    * The constructor function initializes an object with references to a form element and a specified
    * class for editable inputs.
@@ -22,22 +21,25 @@ class Form {
     // Configuración de validaciones por tipo de input
     this.VALIDATIONS = {
       text: {
-        messageError: "Please enter a valid text (3-20 alphanumeric characters)",
-        regExp: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]{3,20}$/
+        messageError:
+          "Please enter a valid text (3-20 alphanumeric characters)",
+        regExp: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]{3,20}$/,
       },
       number: {
         messageError: "Please enter a valid Number (0-9 numeric characters)",
-        regExp: /^[0-9]*$/
+        regExp: /^[0-9]*$/,
       },
       email: {
         messageError: "Please enter a valid Email",
-        regExp: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        regExp:
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       },
       password: {
-        messageError: "Password must: be 8-15 chars, have lowercase, uppercase, number, and special character ($@$!%*?&)",
-        regExp: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
+        messageError:
+          "Password must: be 8-15 chars, have lowercase, uppercase, number, and special character ($@$!%*?&)",
+        regExp:
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/,
       },
-      
     };
   }
 
@@ -52,7 +54,9 @@ class Form {
   input and textarea elements within the form using `objForm.querySelectorAll('input')` and
   `objForm.querySelectorAll('textarea')`. */
   validateForm() {
-    const elementsForm = Array.from(this.objForm.querySelectorAll("input, select, textarea"));
+    const elementsForm = Array.from(
+      this.objForm.querySelectorAll("input, select, textarea")
+    );
     // console.log(elementsForm);
 
     for (const element of elementsForm) {
@@ -65,7 +69,7 @@ class Form {
       }
     }
     return true;
-  };
+  }
 
   validateInputs(input) {
     const type = input.type;
@@ -82,7 +86,7 @@ class Form {
         objSpan.classList.add("text-danger");
         objSpan.innerHTML = validation.messageError;
         input.parentNode.insertBefore(objSpan, input.nextSibling);
-      }else{
+      } else {
         console.log(spanError[0].classList);
         spanError[0].classList.add("text-danger");
         spanError[0].innerHTML = validation.messageError;
@@ -97,10 +101,8 @@ class Form {
       }
     }
 
-    return isValid
-  };
-
-
+    return isValid;
+  }
 
   /**
    * The function `getDataFormData` retrieves form data from input, select, and textarea elements and
@@ -111,20 +113,19 @@ class Form {
    * value (trimmed) to the FormData object.
    */
   getDataFormData() {
-    var elementsForm = this.objForm.querySelectorAll('input, select, textarea');
+    var elementsForm = this.objForm.querySelectorAll("input, select, textarea");
     let fromData = new FormData();
     elementsForm.forEach(function (element) {
       if (element.id) {
-        if (element.tagName === 'INPUT') {
-          if (element.type === 'checkbox') {
+        if (element.tagName === "INPUT") {
+          if (element.type === "checkbox") {
             fromData.append(element.id, element.checked);
           } else {
             fromData.append(element.id, element.value.trim());
           }
-        } else if (element.tagName === 'SELECT') {
+        } else if (element.tagName === "SELECT") {
           fromData.append(element.id, element.value.trim());
-        }
-        else if (element.tagName === 'TEXTAREA') {
+        } else if (element.tagName === "TEXTAREA") {
           fromData.append(element.id, element.value.trim());
         }
       }
@@ -145,15 +146,14 @@ class Form {
     for (let i = 0; i < elements.length; i++) {
       if (elements[i].type == "checkbox") {
         if (jsonKeys.includes(elements[i].id)) {
-          elements[i].checked = (json[elements[i].id] == 0) ? false : true;
+          elements[i].checked = json[elements[i].id] == 0 ? false : true;
         }
-      } else if (elements[i].tagName === 'SELECT') {
+      } else if (elements[i].tagName === "SELECT") {
         if (jsonKeys.includes(elements[i].id)) {
           elements[i].value = json[elements[i].id];
           elements[i].selected = true;
         }
-
-      } else if (elements[i].tagName === 'TEXTAREA') {
+      } else if (elements[i].tagName === "TEXTAREA") {
         if (jsonKeys.includes(elements[i].id)) {
           elements[i].value = json[elements[i].id];
         }
@@ -173,19 +173,19 @@ class Form {
    * element is a checkbox, the value stored is the checked status.
    */
   getDataForm() {
-    var elementsForm = this.objForm.querySelectorAll('input, select, textarea');
+    var elementsForm = this.objForm.querySelectorAll("input, select, textarea");
     let getJson = {};
     elementsForm.forEach(function (element) {
       if (element.id) {
-        if (element.tagName === 'INPUT') {
-          if (element.type === 'checkbox') {
+        if (element.tagName === "INPUT") {
+          if (element.type === "checkbox") {
             getJson[element.id] = element.checked;
           } else {
             getJson[element.id] = element.value.trim();
           }
-        } else if (element.tagName === 'SELECT') {
+        } else if (element.tagName === "SELECT") {
           getJson[element.id] = element.value.trim();
-        } else if (element.tagName === 'TEXTAREA') {
+        } else if (element.tagName === "TEXTAREA") {
           getJson[element.id] = element.value.trim();
         }
       }
@@ -197,8 +197,8 @@ class Form {
    * The `resetForm` function clears the values of input fields and textareas within a specified form.
    */
   resetForm() {
-    let elementInput = this.objForm.querySelectorAll('input,select');
-    let elementTextarea = this.objForm.querySelectorAll('textarea');
+    let elementInput = this.objForm.querySelectorAll("input,select");
+    let elementTextarea = this.objForm.querySelectorAll("textarea");
     for (let i = 0; i < elementInput.length; i++) {
       elementInput[i].value = "";
     }
@@ -212,8 +212,8 @@ class Form {
    * The `disabledForm` function disables all input fields and textareas within a specified form and resets the form.
    */
   disabledForm() {
-    let elementInput = this.objForm.querySelectorAll('input,select');
-    let elementTextarea = this.objForm.querySelectorAll('textarea');
+    let elementInput = this.objForm.querySelectorAll("input,select");
+    let elementTextarea = this.objForm.querySelectorAll("textarea");
     for (let i = 0; i < elementInput.length; i++) {
       elementInput[i].disabled = true;
     }
@@ -227,8 +227,8 @@ class Form {
    * The `enabledForm` function enables all input fields and textareas within a specified form and resets the form.
    */
   enabledForm() {
-    let elementInput = this.objForm.querySelectorAll('input,select');
-    let elementTextarea = this.objForm.querySelectorAll('textarea');
+    let elementInput = this.objForm.querySelectorAll("input,select");
+    let elementTextarea = this.objForm.querySelectorAll("textarea");
     for (let i = 0; i < elementInput.length; i++) {
       elementInput[i].disabled = false;
     }
@@ -242,8 +242,8 @@ class Form {
    * The function `enabledEditForm` enables or disables form input elements based on their class names.
    */
   enabledEditForm() {
-    let elementInput = this.objForm.querySelectorAll('input,select');
-    let elementTextarea = this.objForm.querySelectorAll('textarea');
+    let elementInput = this.objForm.querySelectorAll("input,select");
+    let elementTextarea = this.objForm.querySelectorAll("textarea");
 
     for (let i = 0; i < elementInput.length; i++) {
       if (elementInput[i].classList.contains(this.classEdit)) {
@@ -267,7 +267,7 @@ class Form {
    * The function `disabledButton` disables all buttons within a specified form.
    */
   disabledButton() {
-    let elementButton = this.objForm.querySelectorAll('button');
+    let elementButton = this.objForm.querySelectorAll("button");
     //console.log(elementButton);
     for (let i = 0; i < elementButton.length; i++) {
       elementButton[i].disabled = true;
@@ -278,7 +278,7 @@ class Form {
    * The function `enabledButton` enables all buttons within a specified form element.
    */
   enabledButton() {
-    let elementButton = this.objForm.querySelectorAll('button');
+    let elementButton = this.objForm.querySelectorAll("button");
     for (let i = 0; i < elementButton.length; i++) {
       elementButton[i].disabled = false;
     }
@@ -287,7 +287,7 @@ class Form {
    * The `hiddenButton` function hides all buttons within a specified form element.
    */
   hiddenButton() {
-    let elementButton = this.objForm.querySelectorAll('button');
+    let elementButton = this.objForm.querySelectorAll("button");
     for (let i = 0; i < elementButton.length; i++) {
       elementButton[i].style.display = "none";
     }
@@ -297,10 +297,23 @@ class Form {
    * to "block".
    */
   showButton() {
-    let elementButton = this.objForm.querySelectorAll('button');
+    let elementButton = this.objForm.querySelectorAll("button");
     for (let i = 0; i < elementButton.length; i++) {
       elementButton[i].style.display = "block";
     }
   }
-}
 
+  /*
+  This method erase the div that contains the password field this is in order 
+  to avoid errors when update
+  */
+
+  erasePwField() {
+    let elementInput = this.objForm.querySelectorAll("input,select,div");
+    for (let i = 0; i < elementInput.length; i++) {
+      if (elementInput[i].classList.contains("create-input")) {
+        elementInput[i].remove();
+      }
+    }
+  }
+}

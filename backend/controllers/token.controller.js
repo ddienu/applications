@@ -14,4 +14,4 @@ export const verifyToken = (req, res) => {
   } catch (err) {
     res.status(400).json({ error: "Invalid Token",valid: false });
   }
-};
+}

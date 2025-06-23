@@ -10,6 +10,7 @@ fadeInElement(document.querySelector('body'), 1000);
 const routes = {
   '#dashboard': 'views/dashboard/index.html',
   '#user': 'views/user/index.html',
+  '#userApi': 'views/userApi/index.html',
   '#role': 'views/role/index.html',
   '#documentType': 'views/documentType/index.html',
   '#profile': 'views/profile/index.html',
@@ -19,7 +20,7 @@ const routes = {
 function loadContent() {
   const hash = window.location.hash || '#dashboard';
   const viewPath = routes[hash] || routes['#dashboard'];
-  contentFrame.src = viewPath;
+  if(contentFrame) contentFrame.src = viewPath;
   document.querySelectorAll('.nav-link').forEach(link => {
     link.classList.toggle('active', link.getAttribute('href') === hash);
   });

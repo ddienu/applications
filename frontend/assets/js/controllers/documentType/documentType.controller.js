@@ -14,6 +14,7 @@ const objForm = new Form('documentTypeForm', 'edit-input');
 const objModal = new bootstrap.Modal(document.getElementById('appModal'));
 const objTableBody = document.getElementById('app-table-body');
 const myForm = objForm.getForm();
+const appStorage = new AppStorage();
 const textConfirm = "Press a button!\nEither OK or Cancel.";
 const appTable = "#app-table";
 
@@ -40,7 +41,8 @@ myForm.addEventListener('submit', (e) => {
     endpointUrl = URL_DOCUMENT_TYPE + keyId;
   }
   documentData = objForm.getDataForm();
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -89,7 +91,9 @@ function delete_(id) {
     documentData = "";
     httpMethod = METHODS[3]; // DELETE method
     endpointUrl = URL_DOCUMENT_TYPE + id;
-    const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+    // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+    const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
     resultServices.then(response => {
       return response.json();
     }).then(data => {
@@ -109,7 +113,9 @@ function getDataId(id) {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_DOCUMENT_TYPE + id;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {
@@ -127,7 +133,9 @@ function getData() {
   documentData = "";
   httpMethod = METHODS[0]; // GET method
   endpointUrl = URL_DOCUMENT_TYPE;
-  const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  // const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+  const token = appStorage.getItem(KEY_TOKEN);
+  const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
   resultServices.then(response => {
     return response.json();
   }).then(data => {

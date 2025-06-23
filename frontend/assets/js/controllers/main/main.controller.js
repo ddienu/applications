@@ -19,8 +19,35 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
-  
 });
+
+const signOutButton = document.getElementById('signOutBtn');
+const appStorage = new AppStorage();
+
+window.addEventListener("load", () => {
+     if(appStorage.getItem(USER_ROLE) === "admin"){
+        // window.location.href = '../../';
+        const adminContent = document.getElementById("admin-content");
+        // console.log(adminContent);
+        adminContent.style.display = 'block'
+      }else if(appStorage.getItem(USER_ROLE) === "userapi") {
+        // window.location.href = '../../views/userApi/index.html'
+        // window.location.href = '../../';
+        const userApiContent = document.getElementById("userapi-content");
+        // console.log(userApiContent);
+        userApiContent.style.display = 'block'
+      }
+})
+
+signOutButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  if(confirm("¿Desea cerrar sesión?")){
+    appStorage.clear();
+    window.location.href = `${window.location.origin}/frontend/views/auth`;
+  }
+})
+
 function resizeIframe(iframe) {
     iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
   }
+

@@ -143,6 +143,7 @@ class UserController {
       }
       // Check if the user already exists
       const existingUser = await UserModel.findByName(user);
+      // console.log(existingUser);
       if (existingUser) {
         const passwordHash = await comparePassword(password, existingUser.password_hash);
         if (!passwordHash) {
@@ -152,7 +153,7 @@ class UserController {
           if (!updateLogin) {
             return res.status(500).json({ error: 'Failed to update login time' });
           }
-          const token = jwt.sign({ id: existingUser.id, email: existingUser.email, status: existingUser.status_id }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ id: existingUser.id, email: existingUser.email, status: existingUser.status_id, role: existingUser.role_name }, process.env.JWT_SECRET, {
             expiresIn: "1h",
             algorithm: "HS256"
           });
@@ -161,6 +162,7 @@ class UserController {
             user: {
               id: existingUser.id,
               username: existingUser.username,
+              role: existingUser.role_name,
               email: existingUser.email,
               statusId: existingUser.statusId,
               token: token

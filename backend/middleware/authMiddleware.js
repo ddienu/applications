@@ -12,7 +12,7 @@ export const verifyToken = (req, res, next) => {
     const verified = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
     req.user = verified;
     //See data token encrypted
-    //console.log(verified);
+    // console.log(verified);
     next();
   } catch (err) {
     res.status(400).json({ error: "Invalid Token" });

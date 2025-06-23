@@ -24,7 +24,7 @@
     
     <!--Content data-->
     <main>
-      <h1 class="text-center">Formulario de Usuarios</h1>
+      <h1 class="text-center" style="margin-top: 30px;">Formulario de Usuarios</h1>
       <button type="button" title="Add Document Type " class="btn btn-primary" onclick="add()"> <i
           class="fa fa-address-card me-1"></i></button>
 
@@ -36,8 +36,8 @@
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Password</th>
               <th>Status</th>
+              <th>Role</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -49,8 +49,8 @@
               <td>#</td>
               <td>Name</td>
               <td>Email</td>
-              <td>Password</td>
               <td>Status</td>
+              <td>Role</td>
               <td>Actions</td>
             </tr>
           </tfoot>
@@ -62,7 +62,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="appModalLabel">Tipo de Documento</h1>
+              <h1 class="modal-title fs-5" id="appModalLabel">Usuarios</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -85,7 +85,7 @@
                     <label for="email">Email</label>
                   </div>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 create-input">
                   <label for="password_hash" class="form-label required"></label>
                   <div class="form-floating">
                     <input type="password" class="form-control edit-input" placeholder="password" id="password_hash"

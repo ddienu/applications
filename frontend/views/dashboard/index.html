@@ -26,7 +26,24 @@
 
     <!-- Contenido principal - Módulos -->
     <main class="container">
-        <div class="row g-4">
+        <div class="row g-4" id="userapi-content" style="display: none;">
+            <!-- Módulo 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="module-card card">
+                    <div class="card-body text-center p-4">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5 class="card-title">Gestión de Usuarios</h5>
+                        <p class="card-text">Administra los usuarios del sistema, roles y permisos de acceso a las diferentes funcionalidades.</p>
+                        <a href="../user" class="btn btn-primary btn-module">
+                            <i class="fas fa-sign-in-alt me-2"></i> Ingresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4" id="admin-content" style="display: none;">
             <!-- Módulo 1 -->
             <div class="col-md-6 col-lg-4">
                 <div class="module-card card">
@@ -50,6 +67,22 @@
                         <div class="card-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
+                        <h5 class="card-title">Gestión de usuarios API</h5>
+                        <p class="card-text">Administra los usuarios API registrados en la aplicación.</p>
+                        <a href="../userApi" class="btn btn-primary btn-module">
+                            <i class="fas fa-sign-in-alt me-2"></i> Ingresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="module-card card">
+                    <div class="card-body text-center p-4">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <h5 class="card-title">Gestión estados de usuario</h5>
                         <p class="card-text">Administra los estados disponibles para los usuarios.</p>
                         <a href="../userStatus" class="btn btn-primary btn-module">
@@ -59,7 +92,7 @@
                 </div>
             </div>
 
-            <!-- Módulo 3 -->
+            <!-- Módulo 4 -->
             <div class="col-md-6 col-lg-4">
                 <div class="module-card card">
                     <div class="card-body text-center p-4">
@@ -75,7 +108,7 @@
                 </div>
             </div>
 
-            <!-- Módulo 4 -->
+            <!-- Módulo 5 -->
             <div class="col-md-6 col-lg-4">
                 <div class="module-card card">
                     <div class="card-body text-center p-4">
@@ -91,7 +124,7 @@
                 </div>
             </div>
 
-            <!-- Módulo 5 -->
+            <!-- Módulo 6 -->
             <div class="col-md-6 col-lg-4">
                 <div class="module-card card">
                     <div class="card-body text-center p-4">
@@ -101,22 +134,6 @@
                         <h5 class="card-title">Gestión de perfiles</h5>
                         <p class="card-text">Administra, gestiona y visualiza los perfiles del sistema.</p>
                         <a href="../profile" class="btn btn-primary btn-module">
-                            <i class="fas fa-sign-in-alt me-2"></i> Ingresar
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Módulo 6 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="module-card card">
-                    <div class="card-body text-center p-4">
-                        <div class="card-icon">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <h5 class="card-title">Agenda</h5>
-                        <p class="card-text">Organiza citas, reuniones y eventos con recordatorios y notificaciones automáticas.</p>
-                        <a href="#" class="btn btn-primary btn-module">
                             <i class="fas fa-sign-in-alt me-2"></i> Ingresar
                         </a>
                     </div>
