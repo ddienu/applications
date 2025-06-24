@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('body').style.opacity = 0;
 
   await checkAuth();
-  console.log('user controller has been loaded');
+  console.log('profile controller has been loaded');
   fadeInElement(document.querySelector('body'), 1000);
   // Initialize the loading screen
 
@@ -122,6 +122,7 @@ function getDataId(id) {
   resultServices.then(response => {
     return response.json();
   }).then(data => {
+    console.log(data);
     let getData = data["data"][0];
     objForm.setDataFormJson(getData);
   }).catch(error => {
@@ -144,6 +145,7 @@ function getData() {
     return response.json();
   }).then(data => {
     //Create table 
+    console.log(data);
 
     createTable(data);
   }).catch(error => {
@@ -171,7 +173,7 @@ function createTable(data) {
 <td>${row.last_name}</td>
 <td>${row.address}</td>
 <td>${row.phone}</td>
-<td>${row.document_type_id}</td>
+<td>${row.document_type_name}</td>
 <td>${row.document_number}</td>
 <td>${row.photo_url}</td>
 <td>${formattedBirthDate}</td>
