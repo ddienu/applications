@@ -13,7 +13,7 @@ class ProfileModel {
   
   static async show() {
     try {
-      let sqlQuery = "SELECT * FROM Profile ORDER BY id";
+      let sqlQuery = "SELECT pr.*, dt.name AS document_type_name FROM profile pr INNER JOIN document_type dt ON pr.document_type_id = dt.id ORDER BY pr.id";
       const [result] = await connect.query(sqlQuery);
       return result;
     } catch (error) {
