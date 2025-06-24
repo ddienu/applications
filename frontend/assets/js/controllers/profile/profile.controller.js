@@ -95,7 +95,8 @@ function delete_(id) {
     documentData = "";
     httpMethod = METHODS[3]; // DELETE method
     endpointUrl = URL_PROFILE + id;
-    const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
+    const token = appStorage.getItem(KEY_TOKEN);
+    const resultServices = getServicesAuth(documentData, httpMethod, endpointUrl, token);
     resultServices.then(response => {
       return response.json();
     }).then(data => {
